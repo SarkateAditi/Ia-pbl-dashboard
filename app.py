@@ -659,7 +659,7 @@ with tabs[4]:
         p = cluster_profiles.loc[c]
         traits = []
         if p["Q6_Income_AED_Encoded"] >= 4: traits.append("High-Income")
-        elif p["Q6_Income_AED_Encoded"] <= 2: traits.append("Budget-Conscious")
+        elif p["Q6_Income_AED_Encoded"] <= 2.5: traits.append("Budget-Conscious")
         else: traits.append("Mid-Income")
         if p["Q15_Digital_Comfort"] >= 4: traits.append("Digital-Savvy")
         elif p["Q15_Digital_Comfort"] <= 2.5: traits.append("Tech-Hesitant")
@@ -667,8 +667,35 @@ with tabs[4]:
         elif p["Q1_Age_Group_Encoded"] >= 4: traits.append("Senior")
         if p["Q12_Satisfaction"] <= 2.5: traits.append("Dissatisfied")
         if p["Q13_Monthly_Spend_AED"] >= 1200: traits.append("High-Spenders")
+        elif p["Q13_Monthly_Spend_AED"] <= 500: traits.append("Low-Spenders")
         if p["Q17_Language_Importance"] >= 4: traits.append("Language-Sensitive")
+        if p["Q19_Willingness_to_Pay_Encoded"] <= 2.5: traits.append("Price-Sensitive")
+        elif p["Q19_Willingness_to_Pay_Encoded"] >= 4.5: traits.append("Premium-Ready")
         persona_names[c] = " ".join(traits[:3]) + " Expats"
+
+    # Deduplicate: if two clusters share the same name, append the 4th trait
+    seen = {}
+    for c in range(optimal_k):
+        name = persona_names[c]
+        if name in seen:
+            p = cluster_profiles.loc[c]
+            all_traits_c = []
+            if p["Q6_Income_AED_Encoded"] >= 4: all_traits_c.append("High-Income")
+            elif p["Q6_Income_AED_Encoded"] <= 2.5: all_traits_c.append("Budget-Conscious")
+            else: all_traits_c.append("Mid-Income")
+            if p["Q15_Digital_Comfort"] >= 4: all_traits_c.append("Digital-Savvy")
+            if p["Q12_Satisfaction"] <= 2.5: all_traits_c.append("Dissatisfied")
+            if p["Q13_Monthly_Spend_AED"] >= 1200: all_traits_c.append("High-Spenders")
+            elif p["Q13_Monthly_Spend_AED"] <= 500: all_traits_c.append("Low-Spenders")
+            if p["Q17_Language_Importance"] >= 4: all_traits_c.append("Language-Sensitive")
+            if p["Q19_Willingness_to_Pay_Encoded"] <= 2.5: all_traits_c.append("Price-Sensitive")
+            # Use more traits to differentiate
+            persona_names[c] = " ".join(all_traits_c[:4]) + " Expats"
+            # If still duplicate, append cluster adoption rank
+            if persona_names[c] in seen:
+                yes_rate = adoption_rates.loc[c, "Yes"]
+                persona_names[c] = persona_names[c].replace("Expats", f"(Adopt {yes_rate:.0f}%) Expats")
+        seen[persona_names[c]] = c
 
     # Cluster size
     cluster_sizes = df["Cluster"].value_counts().sort_index()
