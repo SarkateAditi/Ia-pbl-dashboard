@@ -143,11 +143,11 @@ with tabs[0]:
     dtype_counts.columns = ["Data Type", "Count"]
     col1, col2 = st.columns([1, 2])
     with col1:
-        st.dataframe(dtype_counts, hide_index=True, use_container_width=True)
+        st.dataframe(dtype_counts, hide_index=True, width="stretch")
     with col2:
         fig = px.pie(dtype_counts, values="Count", names="Data Type", color_discrete_sequence=PAL)
         fmt_chart(fig, 300)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     st.subheader("Missing Value Treatment Summary")
     missing_data = pd.DataFrame({
@@ -169,7 +169,7 @@ with tabs[0]:
             "Open-ended Qs routinely have 40-60% non-response; blank = no suggestion"
         ]
     })
-    st.dataframe(missing_data, hide_index=True, use_container_width=True)
+    st.dataframe(missing_data, hide_index=True, width="stretch")
 
     st.subheader("Outlier Detection — Monthly Healthcare Spend (IQR Method)")
     col1, col2 = st.columns(2)
@@ -180,12 +180,12 @@ with tabs[0]:
             "Value": ["330 AED", "1,132 AED", "802 AED", "-874 AED", "2,336 AED",
                        "156 (7.8%)", "139", "17 → capped at 10,000 AED"]
         })
-        st.dataframe(outlier_stats, hide_index=True, use_container_width=True)
+        st.dataframe(outlier_stats, hide_index=True, width="stretch")
     with col2:
         fig = px.box(df, y="Q13_Monthly_Spend_AED", color_discrete_sequence=[PAL[1]])
         fig.update_layout(title="Post-Cleaning Spend Distribution", yaxis_title="AED/month")
         fmt_chart(fig, 380)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     st.subheader("Cleaning Steps Applied")
     steps = [
@@ -215,7 +215,7 @@ with tabs[1]:
         fig.update_traces(textposition="outside")
         fig.update_layout(title="1. Age Group Distribution")
         fmt_chart(fig)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("The 25-44 age range dominates (~65%), reflecting UAE's working-age expat population. This is also the most digitally active demographic — a strong foundation for app adoption.")
 
     with col2:
@@ -225,7 +225,7 @@ with tabs[1]:
         fig = px.pie(gender_df, values="Count", names="Gender", hole=0.45, color_discrete_sequence=PAL)
         fig.update_layout(title="2. Gender Distribution")
         fmt_chart(fig)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("~68% male respondents mirrors the UAE expat workforce composition. Both genders should be considered in UX design, but marketing can initially skew toward the majority segment.")
 
     col1, col2 = st.columns(2)
@@ -238,7 +238,7 @@ with tabs[1]:
         fig.update_traces(textposition="outside")
         fig.update_layout(title="3. Nationality / Region Breakdown")
         fmt_chart(fig)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("South Asians form the largest bloc (~42%), followed by Southeast Asians (~18%). Multilingual support — especially Hindi/Urdu, Tagalog, and Arabic — is critical for reaching the majority.")
 
     with col2:
@@ -250,7 +250,7 @@ with tabs[1]:
         fig.update_traces(textposition="outside")
         fig.update_layout(title="4. Employment Status Distribution")
         fmt_chart(fig)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("Full-time employees (~52%) represent the core audience with employer insurance and stable income. Self-employed and dependents form secondary segments with distinct needs.")
 
     # 5. Income
@@ -260,7 +260,7 @@ with tabs[1]:
     fig.update_traces(textposition="outside")
     fig.update_layout(title="5. Monthly Household Income Distribution (AED)")
     fmt_chart(fig, 400)
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
     insight_box("The income distribution peaks at AED 10,001-20,000 (~28%), indicating a solid middle-income base. Pricing strategy should anchor around what this segment can afford (AED 30-60/month subscription).")
 
 # ═══════════════════════════════════════════════════════════
@@ -278,7 +278,7 @@ with tabs[2]:
         fig.update_traces(textposition="outside")
         fig.update_layout(title="6. Insurance Status")
         fmt_chart(fig)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("~45% have employer-provided insurance, but a significant portion are self-insured or uninsured. The insurance compatibility checker feature addresses a real pain point for these segments.")
 
     with col2:
@@ -290,7 +290,7 @@ with tabs[2]:
         fig.update_traces(textposition="outside")
         fig.update_layout(title="7. Doctor Visit Frequency (per year)")
         fmt_chart(fig)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("~70% visit a healthcare provider 0-4 times/year — the app could convert infrequent visitors into regular users through convenient virtual consultations and preventive health features.")
 
     col1, col2 = st.columns(2)
@@ -304,7 +304,7 @@ with tabs[2]:
         fig.update_traces(texttemplate="%{y}", textposition="outside")
         fig.update_layout(title="8. Healthcare Satisfaction Level", showlegend=False)
         fmt_chart(fig)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("The satisfaction distribution centres around 3 (neutral), with a notable tail of dissatisfied respondents (1-2). These ~30% dissatisfied expats represent the highest-propensity adopters.")
 
     with col2:
@@ -316,7 +316,7 @@ with tabs[2]:
         fig.update_traces(textposition="outside")
         fig.update_layout(title="9. Top Healthcare Challenges (Multi-Select)")
         fmt_chart(fig, 480)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("High out-of-pocket costs (49%), long waiting times (44%), and language barriers (36%) are the top three challenges — directly mapping to e-prescriptions, appointment booking, and multilingual consultation features.")
 
     # 10. Spend histogram
@@ -325,7 +325,7 @@ with tabs[2]:
     fig.update_layout(title="10. Monthly Healthcare Expenditure Distribution (AED)", xaxis_title="AED/month",
                       yaxis_title="Frequency")
     fmt_chart(fig, 420)
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
     insight_box("Heavily right-skewed with median ~660 AED. The long tail includes high spenders (chronic conditions, families) — these are economically valuable targets. Outliers beyond 10K AED were capped during cleaning.")
 
 # ═══════════════════════════════════════════════════════════
@@ -343,7 +343,7 @@ with tabs[3]:
             fig.add_trace(go.Bar(name=interest, x=ct.index, y=ct[interest], marker_color=COLORS[interest]))
         fig.update_layout(barmode="group", title="11. Age Group vs Adoption Interest (%)", yaxis_title="% within age group")
         fmt_chart(fig)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("Younger age groups (18-34) show the highest 'Yes' rates. The 55+ segment has the lowest adoption — they may need simplified UX or assisted onboarding.")
 
     with col2:
@@ -355,7 +355,7 @@ with tabs[3]:
             fig.add_trace(go.Bar(name=interest, x=ct.index, y=ct[interest], marker_color=COLORS[interest]))
         fig.update_layout(barmode="stack", title="12. Income Level vs Adoption Interest (%)", yaxis_title="%", xaxis_tickangle=-30)
         fmt_chart(fig)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("Mid-to-high income brackets (20K-50K AED) show stronger 'Yes' rates. Low-income respondents lean toward 'Maybe' — pricing sensitivity is a conversion barrier for this group.")
 
     col1, col2 = st.columns(2)
@@ -367,7 +367,7 @@ with tabs[3]:
             fig.add_trace(go.Bar(name=interest, x=ct.index, y=ct[interest], marker_color=COLORS[interest]))
         fig.update_layout(barmode="group", title="13. Insurance Status vs Adoption Interest (%)", yaxis_title="%")
         fmt_chart(fig)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("Uninsured respondents show polarised responses — high 'Yes' (they need affordable care) but also high 'No' (they may not trust digital health). The insurance checker feature could convert the 'Maybe' group.")
 
     with col2:
@@ -379,7 +379,7 @@ with tabs[3]:
         fig.update_layout(barmode="group", title="14. Satisfaction vs Adoption Interest (%)", yaxis_title="%",
                           xaxis_title="Satisfaction (1-5)")
         fmt_chart(fig)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("Clear inverse relationship: dissatisfied respondents (scores 1-2) show the highest 'Yes' rates. Satisfaction is one of the strongest adoption predictors — target the frustrated first.")
 
     col1, col2 = st.columns(2)
@@ -389,7 +389,7 @@ with tabs[3]:
                      category_orders={"Q25_Interest": INTEREST_ORDER}, color_discrete_map=COLORS)
         fig.update_layout(title="15. Monthly Spend vs Adoption Interest", yaxis_title="AED/month", showlegend=False)
         fmt_chart(fig)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("'Yes' respondents tend to have higher median spend — they are currently spending more and see the app as a way to manage costs better. These are economically valuable adopters.")
 
     with col2:
@@ -401,7 +401,7 @@ with tabs[3]:
         fig.update_traces(textposition="outside")
         fig.update_layout(title="16. Most Desired App Features")
         fmt_chart(fig, 480)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("E-prescriptions, specialist referrals, virtual consultations, and emergency helpline top the list. These four features should form the MVP core.")
 
     col1, col2 = st.columns(2)
@@ -413,7 +413,7 @@ with tabs[3]:
             fig.add_trace(go.Bar(name=interest, x=ct.index, y=ct[interest], marker_color=COLORS[interest]))
         fig.update_layout(barmode="group", title="17. Consultation Mode vs Adoption (%)", yaxis_title="%")
         fmt_chart(fig)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("Video call preference shows the highest 'Yes' rate — invest in high-quality video consultation infrastructure first, with voice and chat as secondary options.")
 
     with col2:
@@ -425,7 +425,7 @@ with tabs[3]:
             fig.add_trace(go.Bar(name=interest, x=ct.index, y=ct[interest], marker_color=COLORS[interest]))
         fig.update_layout(barmode="stack", title="18. Willingness to Pay vs Adoption (%)", yaxis_title="%", xaxis_tickangle=-30)
         fmt_chart(fig)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("Higher WTP brackets show progressively higher 'Yes' rates. The 'Free only' group is mostly 'Maybe/No' — a freemium model can capture them while monetising willingness in mid-to-high tiers.")
 
     col1, col2 = st.columns(2)
@@ -438,7 +438,7 @@ with tabs[3]:
             fig.add_trace(go.Bar(name=interest, x=ct.index, y=ct[interest], marker_color=COLORS[interest]))
         fig.update_layout(barmode="group", title="19. Prior Telemedicine Experience vs Adoption (%)", yaxis_title="%")
         fmt_chart(fig)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("Prior users are dramatically more likely to say 'Yes'. This confirms the 'try it once' hypothesis — offering free trial consultations could be the strongest conversion lever.")
 
     with col2:
@@ -457,7 +457,7 @@ with tabs[3]:
         fig.update_layout(title="20. Correlation Heatmap (Ordinal & Numeric Variables)",
                           coloraxis_colorbar=dict(tickfont=dict(color="#CBD5E1")))
         fmt_chart(fig, 520)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
         insight_box("Q25 Interest correlates most with Digital Comfort, Prior Telemedicine Experience, and inversely with Satisfaction — confirming that tech-savvy, dissatisfied expats with prior telemedicine exposure are the prime adopters.")
 
     # 21. Sankey Diagram — Challenge → Feature → Adoption flow
@@ -501,14 +501,13 @@ with tabs[3]:
     fig = go.Figure(go.Sankey(
         arrangement="snap",
         node=dict(pad=20, thickness=25, line=dict(color="#2D3748", width=1),
-                  label=all_labels, color=node_colors,
-                  font=dict(size=12, color="#E2E8F0")),
+                  label=all_labels, color=node_colors),
         link=dict(source=sources, target=targets, value=values, color=link_colors)
     ))
     fig.update_layout(title="Adoption Flow: Top Challenges → Top Features → Interest",
                       paper_bgcolor="rgba(0,0,0,0)", font=dict(color="#E2E8F0"),
                       title_font=dict(color="#E2E8F0", size=16), height=550)
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
     insight_box("The Sankey reveals the dominant pathway: cost and waiting-time challenges drive demand for e-prescriptions and specialist referrals, which flow heavily into 'Yes' and 'Maybe' adoption. Language barriers create a distinct pathway toward multilingual virtual consultations. These three feature channels carry the most adoption volume.")
 
 # ═══════════════════════════════════════════════════════════
@@ -555,7 +554,7 @@ with tabs[4]:
         fig.update_layout(title="Cumulative Variance Explained by PCA",
                           xaxis_title="Number of Components", yaxis_title="Cumulative Variance (%)")
         fmt_chart(fig, 380)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     with col2:
         # Per-component variance
@@ -566,7 +565,7 @@ with tabs[4]:
         fig.update_layout(title=f"Variance per Component (Top {n_components})",
                           xaxis_title="Component", yaxis_title="Variance Explained (%)")
         fmt_chart(fig, 380)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     st.info(f"**PCA: {len(cluster_features)} features → {n_components} components** "
             f"retaining {var_explained:.1f}% of total variance. "
@@ -596,7 +595,7 @@ with tabs[4]:
         fig.update_layout(title="Elbow Method — Optimal k (PCA)", xaxis_title="Number of Clusters (k)",
                           yaxis_title="Inertia")
         fmt_chart(fig, 380)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     with col2:
         fig = go.Figure()
@@ -609,7 +608,7 @@ with tabs[4]:
         fig.update_layout(title="Silhouette Score: PCA vs Raw", xaxis_title="Number of Clusters (k)",
                           yaxis_title="Silhouette Score")
         fmt_chart(fig, 380)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     # Fit optimal k — Kneedle algorithm (max perpendicular distance from chord)
     # Pure silhouette favours k=2 with high-dimensional binary data (scores are all ~0.05).
@@ -640,7 +639,7 @@ with tabs[4]:
                      labels={"PC1": "Principal Component 1", "PC2": "Principal Component 2"})
     fig.update_layout(title="Respondents in PCA Space (Coloured by Cluster)")
     fmt_chart(fig, 450)
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
     # Profile clusters
     profile_cols = ["Q1_Age_Group_Encoded", "Q6_Income_AED_Encoded", "Q9_Visit_Frequency_Encoded",
@@ -684,7 +683,7 @@ with tabs[4]:
         fig.update_traces(texttemplate="%{text}%", textposition="outside")
         fig.update_layout(title="Cluster Size Distribution", xaxis_tickangle=-20)
         fmt_chart(fig, 400)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     with col2:
         # Adoption rate per cluster
@@ -695,7 +694,7 @@ with tabs[4]:
                                  marker_color=COLORS[interest]))
         fig.update_layout(barmode="stack", title="Adoption Rate by Cluster (%)", yaxis_title="%", xaxis_tickangle=-20)
         fmt_chart(fig, 400)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
     # Radar chart
     st.subheader("Cluster Profile Comparison — Radar Chart")
@@ -721,7 +720,7 @@ with tabs[4]:
                       title="Cluster Profiles (Normalised)", height=520,
                       paper_bgcolor="rgba(0,0,0,0)", font=dict(color="#E2E8F0"),
                       legend=dict(font=dict(color="#E2E8F0")))
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width="stretch")
 
     # Persona cards
     st.subheader("Persona Descriptions")
@@ -791,13 +790,13 @@ with tabs[5]:
         rules_ch = run_arm(adopters, Q10_COLS, Q10_LABELS)
         if len(rules_ch) > 0:
             st.dataframe(rules_ch[["rule", "support", "confidence", "lift"]].round(3), hide_index=True,
-                         use_container_width=True)
+                         width="stretch")
             fig = px.scatter(rules_ch, x="confidence", y="lift", size="support", hover_data=["rule"],
                              color_discrete_sequence=[PAL[3]], size_max=20,
                              labels={"confidence": "Confidence", "lift": "Lift"})
             fig.update_layout(title="Confidence vs Lift — Challenge Rules")
             fmt_chart(fig, 400)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
         else:
             st.warning("No rules found with current thresholds.")
 
@@ -807,12 +806,12 @@ with tabs[5]:
         rules_ft = run_arm(adopters, Q16_COLS, Q16_LABELS)
         if len(rules_ft) > 0:
             st.dataframe(rules_ft[["rule", "support", "confidence", "lift"]].round(3), hide_index=True,
-                         use_container_width=True)
+                         width="stretch")
             fig = px.scatter(rules_ft, x="confidence", y="lift", size="support", hover_data=["rule"],
                              color_discrete_sequence=[PAL[4]], size_max=20)
             fig.update_layout(title="Confidence vs Lift — Feature Rules")
             fmt_chart(fig, 400)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
         else:
             st.warning("No rules found with current thresholds.")
 
@@ -824,12 +823,12 @@ with tabs[5]:
         rules_cross = run_arm(adopters, all_cols, all_labels, min_sup=0.01, min_conf=0.5)
         if len(rules_cross) > 0:
             st.dataframe(rules_cross[["rule", "support", "confidence", "lift"]].round(3), hide_index=True,
-                         use_container_width=True)
+                         width="stretch")
             fig = px.scatter(rules_cross, x="confidence", y="lift", size="support", hover_data=["rule"],
                              color_discrete_sequence=[PAL[5]], size_max=20)
             fig.update_layout(title="Confidence vs Lift — Cross-Mined Rules")
             fmt_chart(fig, 400)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
         else:
             st.warning("No rules found with current thresholds.")
 
@@ -925,7 +924,7 @@ with tabs[6]:
         st.markdown(f"**Best model: {best_model_name}** (F1 = {best_f1:.4f})")
         st.dataframe(res_df.style.format({"Accuracy": "{:.4f}", "Precision": "{:.4f}",
                                            "Recall": "{:.4f}", "F1-Score": "{:.4f}"}),
-                     hide_index=True, use_container_width=True)
+                     hide_index=True, width="stretch")
 
         col1, col2 = st.columns(2)
         with col1:
@@ -935,7 +934,7 @@ with tabs[6]:
                          color_discrete_sequence=PAL)
             fig.update_layout(title="7-Model Comparison", xaxis_tickangle=-30, yaxis_range=[0, 1])
             fmt_chart(fig, 420)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
         with col2:
             # Confusion matrix for best model
@@ -947,7 +946,7 @@ with tabs[6]:
             fig.update_layout(title=f"Confusion Matrix — {best_model_name}",
                               coloraxis_colorbar=dict(tickfont=dict(color="#CBD5E1")))
             fmt_chart(fig, 420)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
         # Feature importance
         st.subheader("Feature Importance — Top 20")
@@ -963,7 +962,7 @@ with tabs[6]:
             fig.update_traces(texttemplate="%{text:.3f}", textposition="outside")
             fig.update_layout(title=f"Feature Importance — {imp_model_name}")
             fmt_chart(fig, 550)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
         st.subheader("💼 Business Interpretation — Classification")
         st.markdown(f"""
@@ -1032,7 +1031,7 @@ The **{best_model_name}** achieves the best performance with an F1-score of **{b
         reg_df = pd.DataFrame(results_reg).sort_values("R² (log)", ascending=False)
         st.markdown(f"**Best model: {best_reg_name}** (R² = {best_r2:.4f} on log scale)")
         st.dataframe(reg_df.style.format({"R² (log)": "{:.4f}", "MAE (AED)": "{:.1f}", "RMSE (AED)": "{:.1f}"}),
-                     hide_index=True, use_container_width=True)
+                     hide_index=True, width="stretch")
 
         col1, col2 = st.columns(2)
         with col1:
@@ -1044,7 +1043,7 @@ The **{best_model_name}** achieves the best performance with an F1-score of **{b
             # Style subplot title fonts for dark theme
             fig.update_annotations(font=dict(color="#E2E8F0", size=13))
             fmt_chart(fig, 400)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
         with col2:
             # Actual vs predicted in AED (back-transformed)
@@ -1056,7 +1055,7 @@ The **{best_model_name}** achieves the best performance with an F1-score of **{b
                                      line=dict(dash="dash", color="grey"), name="Ideal"))
             fig.update_layout(title=f"Actual vs Predicted (AED) — {best_reg_name}")
             fmt_chart(fig, 400)
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
         # Coefficients (on log scale — interpret as % change in spend)
         st.subheader(f"Regression Coefficients — {best_reg_name}")
@@ -1069,7 +1068,7 @@ The **{best_model_name}** achieves the best performance with an F1-score of **{b
         fig.update_traces(texttemplate="%{text:.3f}", textposition="outside")
         fig.update_layout(title=f"Feature Coefficients (Log Scale) — {best_reg_name}")
         fmt_chart(fig, 500)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width="stretch")
 
         st.subheader("💼 Business Interpretation — Regression")
         st.markdown(f"""
